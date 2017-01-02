@@ -2,6 +2,7 @@
 {% load staticfiles %}
 <html lang="pl">
 <head>
+  <meta http-equiv="refresh" content="60" >
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -40,6 +41,13 @@
                 padding-left: 65px;
                 color: #4357AD;
             }
+            div.ui-datepicker{
+                 font-size:24px;
+            }
+            input {
+                width: 150px;
+                height: 45px;
+            }
             #myProgress {
               position: relative;
               width: 100%;
@@ -61,6 +69,7 @@
                 font-weight: bolder;
                 font-size: 25px;
             }
+
         </style>
 </head>
 <body>
@@ -71,8 +80,7 @@
   <div id="main_body">
     <div class="error">{{alert}}</div>
     <div class="header">
-      <form action="{% url 'bufor_status' %}" method="POST">
-        {% csrf_token %}
+      <form action="{% url 'bufor_status' %}" method="GET">
                   Data:
         <input type="text" id="datepicker" name="nowa_data" value="">
         <input type="submit" name="ok" value="Wyszukaj"></form>
@@ -97,8 +105,8 @@
         <tr>
           <td>{{ ta.nr }}</td>
           <td>{{ ta.status_set.first.tapicernia_ilosc }}</td>
-          <td style='background-color: {{ ta.kolor_na_buforze }};'>{{ ta.pokaz_wozki }}</td>
-          <td style='background-color: {{ ta.kolor_na_buforze }};'>{{ ta.pokaz_pola }}</td>
+          <td style='background-color: {{ ta.kolor_na_buforze }}; text-align: center;'>{{ ta.pokaz_wozki }}</td>
+          <td style='background-color: {{ ta.kolor_na_buforze }}; text-align: center;'>{{ ta.pokaz_pola }}</td>
         </tr>
       {% endfor %}
         </tbody>

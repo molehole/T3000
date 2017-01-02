@@ -72,63 +72,13 @@
   <div id="header"></div>
   <div id="main_body">
     <div class="error">{{alert}}</div>
-    <div class="header">
-      <form action="{% url 'zestawienie' %}" method="GET">
-                Data:
-        <input type="text" id="datepicker" name="nowa_data" value="{{wybrana_data}}">
-        <select name="T">
-          {% for tura in tury %}
-             <option value="{{ tura.tura.nr }}">{{ tura.tura.nr }}</option>
-           {% endfor %} 
-        </select>
-        <input type="submit" name="ok" value="Wyszukaj"></form>
-    </div>
-    <div class="wybrana_data text-center">{{wybrana_data}}</div>
-    {% for tura in tury %}
-    <div class="tura">
-      <a href="{% url 'zestawienie' %}{{ tura.tura.nr }}"><h3>Tura {{ tura.tura.nr }}</h3></a>
-    </div>
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th>TA</th>
-          <th>Szwalnia</th>
-          <th>Stolarnia</th>
-          <th>Potwierdzone</th>
-          <th>NIE Potwierdzone</th>
-          <th>Do Wydania</th>
-          <th>Wozki</th>
-          <th>Pola</th>
-          <th>Ilosc Bufor</th>
-          <th>Status Szwalnia</th>
-          <th>Status Stolarnia</th>
-          <th>Status Buffor</th>
-        </tr>
-      </thead>
-      <div class="ta">
-        {% for ta in tura.tura.ta_set.all %}
-        <tbody>
-          <tr>
-            <td>{{ ta }}</td>
-            <td>{{ ta.status_set.first.szwalnia_ilosc }}</td>
-            <td>{{ ta.status_set.first.stolarnia_ilosc }}</td>
-            <td>{{ ta.pokaz_odebrane_wozki }}</td>
-            <td>{{ ta.pokaz_nieodebrane_wozki }}</td>
-            <td>{{ ta.TA_do_wydania }}</td>
-            <td>{{ ta.wozek_set.all }}</td>
-            <td>{{ ta.pole_set.all }}</td>
-            <td>{{ ta.status_set.first.tapicernia_ilosc }}</td>
-            <td>{{ ta.status_set.first.szwalnia }}</td>
-            <td>{{ ta.status_set.first.stolarnia }}</td>
-            <td>{{ ta.status_set.first.tapicernia }}</td>
-          </tr>
-        </tbody>
-        {% endfor %}
-      </div>
-    </table>
-    <hr style="border-color: darkred;">{% endfor %}</div>
+    <p>{{ TA.nr }}</p>    
+    {% for etykieta in TA.etykieta_set.all %}
+      <h7>{{ etykieta.element }}</h7><br>
+    {% endfor %}
   </div>
 </body>
+
 
   <!-- jQuery -->
   <script src="{% static 'jquery/js/jquery.min.js' %}"></script>

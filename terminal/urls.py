@@ -19,12 +19,16 @@ from terminal import views
 urlpatterns = [
     url(r'^szwalnia/status/$', views.szwalnia_status, name='szwalnia_status'),
     url(r'^szwalnia/przekaz/$', views.szwalnia_przekaz, name='szwalnia_przekaz'),
+    url(r'^szwalnia/modelarnia/$', views.szwalnia_modelarnia, name='szwalnia_modelarnia'),
     url(r'^stolarnia/status/$', views.stolarnia_status, name='stolarnia_status'),
     url(r'^stolarnia/przekaz/$', views.stolarnia_przekaz, name='stolarnia_przekaz'),
+    url(r'^stolarnia/modelarnia/$', views.stolarnia_modelarnia, name='stolarnia_modelarnia'),
+    url(r'^stolarnia/sprawdz/$', views.stolarnia_sprawdz, name='stolarnia_sprawdz'),
     url(r'^bufor/status/$', views.bufor_status, name='bufor_status'),
     url(r'^bufor/przekaz/$', views.bufor_przekaz, name='bufor_przekaz'),
     url(r'^bufor/oddaj/$', views.bufor_oddaj, name='bufor_oddaj'),
     url(r'^bufor/potwierdz/$', views.bufor_potwierdz, name='bufor_potwierdz'),
     url(r'^bufor/sprawdz/$', views.bufor_sprawdz, name='bufor_sprawdz'),
     url(r'^zestawienie/$', views.zestawienie, name='zestawienie'),
+    url(r'^zestawienie/(?P<T>[\d]+)/$', views.zestawienie_pojedyncze, name='zestawienie_pojedyncze'),
 ]

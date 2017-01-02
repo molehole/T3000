@@ -3,6 +3,7 @@
 <html lang="pl">
     <head>
         <meta charset="utf-8">
+        <meta http-equiv="refresh" content="20" >
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{{ title }}</title>
@@ -29,10 +30,19 @@
                 color: #C1666B;
                 font-weight: bolder;
             }
+            input {
+                width: 150px;
+                height: 45px;
+            }
             h5 {
                 padding-left: 45px;
+                font-size: 20px;
                 color: #4357AD;
                 font-weight: bold;
+                float: left;
+            }
+            div.ui-datepicker{
+                 font-size:24px;
             }
             h6 {
                 padding-left: 65px;
@@ -68,8 +78,7 @@
             <div id="main_body">
               <div class="error">{{alert}}</div>
               <div class="header">
-                <form action="{% url 'informacje_index' %}" method="POST">
-                {% csrf_token %}
+                <form action="{% url 'stolarnia_status' %}" method="GET">
                   Data: <input type="text" id="datepicker" name="nowa_data" value="">
                   <input type="submit" name="ok" value="Wyszukaj">
                 </form>
@@ -80,21 +89,18 @@
                 <h3>
                   Tura {{ tura.tura.nr }}
                 </h3>
-              {{ tura.ilosci_pozostale }} z {{ tura.tura.ta_set.all.count }}
+              {{ tura.tura.ilosci_skonczone_stolarnia}} z {{ tura.tura.ta_set.all.count }}
               <div id="myProgress">
                 <div id="myBar" style="width: {{ tura.procent }}%;"></div>
               </div>
             </div>
-            <div class="ta">
-              {% for ta in tura.tura.ta_set.all %}
-              <h5 {% if ta.zakonczone %}
-                style="color: red;"
-                {% endif %}>{{ ta.nr }} - {{ ta.status_set.first.stolarnia_ilosc }}szt.*</h5>
-                {% for et in ta.etykieta_set.all %}
-                <h6 {% if ta.zakonczone %}
-                style="color: red;"
-                {% endif %}>{{ et.nr }} - {{ et.element }}</h6>
-                {% endfor %}
+            <div class="ta" style="height: 200px;">
+              {% for ta in tura.tura.pokaz_niezakonczone %}
+              {% if not ta.pokaz_stolarnia %}
+              <h5>
+                  {% if ta.ilosc > 1 %}{{ ta.nr }} - {{ ta.status_set.first.stolarnia_ilosc}}szt.*</h5>{% endif %}
+                  {% if ta.ilosc == 1 %}{{ ta.nr }} - {{ ta.status_set.first.stolarnia_ilosc}}szt.</h5>{% endif %}
+              {% endif %}
               {% endfor %}
               </div>
               <hr>
@@ -112,32 +118,30 @@
 
         <script type="text/javascript">
           $(document).ready(function() {
-            $('.ta').hide();
+            $('.ta').show();
 
             $.datepicker.regional.pl = {
-          	closeText: "Zamknij",
-          	prevText: "&#x3C;Poprzedni",
-          	nextText: "Następny&#x3E;",
-          	currentText: "Dziś",
-          	monthNames: [ "Styczeń","Luty","Marzec","Kwiecień","Maj","Czerwiec",
-          	"Lipiec","Sierpień","Wrzesień","Październik","Listopad","Grudzień" ],
-          	monthNamesShort: [ "Sty","Lu","Mar","Kw","Maj","Cze",
-          	"Lip","Sie","Wrz","Pa","Lis","Gru" ],
-          	dayNames: [ "Niedziela","Poniedziałek","Wtorek","Środa","Czwartek","Piątek","Sobota" ],
-          	dayNamesShort: [ "Nie","Pn","Wt","Śr","Czw","Pt","So" ],
-          	dayNamesMin: [ "N","Pn","Wt","Śr","Cz","Pt","So" ],
-          	weekHeader: "Tydz",
-          	dateFormat: "dd.mm.yy",
-          	firstDay: 1,
-          	isRTL: false,
-          	showMonthAfterYear: false,
-          	yearSuffix: "" };
+            closeText: "Zamknij",
+            prevText: "&#x3C;Poprzedni",
+            nextText: "Następny&#x3E;",
+            currentText: "Dziś",
+            monthNames: [ "Styczeń","Luty","Marzec","Kwiecień","Maj","Czerwiec",
+            "Lipiec","Sierpień","Wrzesień","Październik","Listopad","Grudzień" ],
+            monthNamesShort: [ "Sty","Lu","Mar","Kw","Maj","Cze",
+            "Lip","Sie","Wrz","Pa","Lis","Gru" ],
+            dayNames: [ "Niedziela","Poniedziałek","Wtorek","Środa","Czwartek","Piątek","Sobota" ],
+            dayNamesShort: [ "Nie","Pn","Wt","Śr","Czw","Pt","So" ],
+            dayNamesMin: [ "N","Pn","Wt","Śr","Cz","Pt","So" ],
+            weekHeader: "Tydz",
+            dateFormat: "dd.mm.yy",
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: "" };
             $('#datepicker').datepicker($.datepicker.regional[ "pl" ]);
 
-            $('.tura').click(function() {
-              $(this).next('.ta').toggle();
-            })
           });
         </script>
     </body>
 </html>
+

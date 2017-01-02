@@ -1,8 +1,9 @@
-<!DOCTYPE html>\
+<!DOCTYPE html>
 {% load staticfiles %}
 <html lang="pl">
     <head>
         <meta charset="utf-8">
+        <meta http-equiv="refresh" content="20" >
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{{ title }}</title>
@@ -29,11 +30,19 @@
                 color: #C1666B;
                 font-weight: bolder;
             }
+            input {
+                width: 150px;
+                height: 45px;
+            }
             h5 {
                 padding-left: 45px;
+                font-size: 20px;
                 color: #4357AD;
                 font-weight: bold;
                 float: left;
+            }
+            div.ui-datepicker{
+                 font-size:24px;
             }
             h6 {
                 padding-left: 65px;
@@ -69,8 +78,7 @@
             <div id="main_body">
               <div class="error">{{alert}}</div>
               <div class="header">
-                <form action="{% url 'szwalnia_status' %}" method="POST">
-                {% csrf_token %}
+                <form action="{% url 'szwalnia_status' %}" method="GET">
                   Data: <input type="text" id="datepicker" name="nowa_data" value="">
                   <input type="submit" name="ok" value="Wyszukaj">
                 </form>
@@ -81,18 +89,18 @@
                 <h3>
                   Tura {{ tura.tura.nr }}
                 </h3>
-              {{ tura.ilosci_pozostale }} z {{ tura.tura.ta_set.all.count }}
+              {{ tura.tura.ilosci_skonczone_szwalnia }} z {{ tura.tura.ta_set.all.count }}
               <div id="myProgress">
                 <div id="myBar" style="width: {{ tura.procent }}%;"></div>
               </div>
             </div>
             <div class="ta" style="height: 200px;">
-              {% for ta in tura.tura.ta_set.all %}
-              <h5 {% if ta.zakonczone %}
-                style="color: red; height"
-                  {% endif %}>
-                  {% if ta.ilosc > 1 %}{{ ta.nr }} - {{ ta.status_set.first.szwalnia_ilosc }}szt.*</h5>{% endif %}                
+              {% for ta in tura.tura.pokaz_niezakonczone %}
+              {% if not ta.pokaz_szwalnie %}
+              <h5>
+                  {% if ta.ilosc > 1 %}{{ ta.nr }} - {{ ta.status_set.first.szwalnia_ilosc }}szt.*</h5>{% endif %}
                   {% if ta.ilosc == 1 %}{{ ta.nr }} - {{ ta.status_set.first.szwalnia_ilosc }}szt.</h5>{% endif %}
+              {% endif %}
               {% endfor %}
               </div>
               <hr>
@@ -136,3 +144,4 @@
         </script>
     </body>
 </html>
+
