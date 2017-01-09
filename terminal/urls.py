@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^stolarnia/przekaz/$', views.stolarnia_przekaz, name='stolarnia_przekaz'),
     url(r'^stolarnia/modelarnia/$', views.stolarnia_modelarnia, name='stolarnia_modelarnia'),
     url(r'^stolarnia/sprawdz/$', views.stolarnia_sprawdz, name='stolarnia_sprawdz'),
+    url(r'^stolarnia/wozki/', views.stolarnia_wozki, name='stolarnia_wozki'),
     url(r'^bufor/status/$', views.bufor_status, name='bufor_status'),
     url(r'^bufor/przekaz/$', views.bufor_przekaz, name='bufor_przekaz'),
     url(r'^bufor/oddaj/$', views.bufor_oddaj, name='bufor_oddaj'),
@@ -31,4 +32,6 @@ urlpatterns = [
     url(r'^bufor/sprawdz/$', views.bufor_sprawdz, name='bufor_sprawdz'),
     url(r'^zestawienie/$', views.zestawienie, name='zestawienie'),
     url(r'^zestawienie/(?P<T>[\d]+)/$', views.zestawienie_pojedyncze, name='zestawienie_pojedyncze'),
+    url(r'^test/$', views.test, name='test'),
+    url(r'^test2/$', views.test2, name='test2'),
 ]

@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!DOCTYPE html>\
 {% load staticfiles %}
 <html lang="pl">
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="refresh" content="180">        
+        <meta http-equiv="refresh" content="20" >
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{{ title }}</title>
@@ -77,38 +77,15 @@
             <div id="header"></div>
             <div id="main_body">
               <div class="error">{{alert}}</div>
-              <div class="header">
-                <form action="{% url 'szwalnia_status' %}" method="GET">
-                  Data: <input type="text" id="datepicker" name="nowa_data" value="">
-                  <input type="submit" name="ok" value="Wyszukaj">
-                </form>
+              <div class="row">
+                <div class="pole1">
+                  {% for ta in pole.1 %}
+                    ta.data_nadania
+                  {% endfor %}
+                </div>
               </div>
-              <div class="wybrana_data text-center">{{wybrana_data}}</div>
-              {% for tura in tury %}
-              {% if not tura.tura.zakonczone_na_szwalni %}  
-              <div class="tura">
-                <h3>
-                  Tura {{ tura.tura.nr }}
-                </h3>
-              {{ tura.tura.ilosci_skonczone_szwalnia }} z {{ tura.tura.ta_set.all.count }}
-              <div id="myProgress">
-                <div id="myBar" style="width: {{ tura.procent }}%;"></div>
-              </div>
-            </div>
-            <div class="ta" style="height: 200px;">
-              {% for ta in tura.tura.pokaz_niezakonczone %}
-              {% if not ta.pokaz_szwalnie %}
-                  {% if ta.ilosc > 1 %}<h5>{{ ta.nr }} - {{ ta.status_set.first.szwalnia_ilosc }}szt.*</h5>{% endif %}
-                  {% if ta.ilosc == 1 %}<h5>{{ ta.nr }} - {{ ta.status_set.first.szwalnia_ilosc }}szt.</h5>{% endif %}
-              {% endif %}
-              {% endfor %}
-              </div>
-              <hr>
-              {% endif %}
-              {% endfor %}
             </div>
           </div>
-
 
         <!-- jQuery -->
         <script src="{% static 'jquery/js/jquery.min.js' %}"></script>

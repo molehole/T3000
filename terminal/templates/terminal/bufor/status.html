@@ -2,7 +2,7 @@
 {% load staticfiles %}
 <html lang="pl">
 <head>
-  <meta http-equiv="refresh" content="60" >
+  <meta http-equiv="refresh" content="180">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -87,7 +87,8 @@
     </div>
     <div class="wybrana_data text-center">{{wybrana_data}}</div>
     {% for tura in tury %}
-    <div class="tura">
+    {% if not tura.tura.zakonczone_po_statusach %}      
+    <div class="tura">    
       <h3>Tura {{ tura.tura.nr }}</h3>
     </div>
     <div class="ta">
@@ -102,18 +103,21 @@
         </thead>
         <tbody>
       {% for ta in tura.tura.pokaz_niezakonczone %}
+        {% if ta.status_set.first.tapicernia_ilosc > 0 %}
         <tr>
           <td>{{ ta.nr }}</td>
-          <td>{{ ta.status_set.first.tapicernia_ilosc }}</td>
+          <td>{{ ta.status_set.first.tapicernia_ilosc }}</td>          
           <td style='background-color: {{ ta.kolor_na_buforze }}; text-align: center;'>{{ ta.pokaz_wozki }}</td>
-          <td style='background-color: {{ ta.kolor_na_buforze }}; text-align: center;'>{{ ta.pokaz_pola }}</td>
+          <td style='background-color: {{ ta.kolor_na_buforze }}; text-align: center;'>{{ ta.pokaz_pola }}</td           
         </tr>
+        {% endif %}
       {% endfor %}
         </tbody>
       </table>
     </div>
     <hr>
-    {% endfor %}
+    {% endif %}
+    {% endfor %}    
     </div>
 </div>
 

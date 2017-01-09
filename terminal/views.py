@@ -185,6 +185,31 @@ def stolarnia_status(request):
     }
     return render(request, 'terminal/stolarnia/status.html', context_dict)
 
+@csrf_exempt
+def stolarnia_wozki(request):
+    if not request.POST:
+        context_dict = {'Pola': Pole.objects.order_by('pole')}
+        return render(request, 'terminal/stolarnia/wozki.html', context_dict)
+    try:
+        usun_date = datetime.strptime(request.POST['usun_date'],'%d.%m.%Y')        
+        pola = Pole.objects.filter(ta__tura__data__startswith=usun_date.strftime('%Y-%m-%d'))
+        pola.delete()
+        context_dict = {'Pola': Pole.objects.order_by('pole'), 'test': pola}
+        return render(request, 'terminal/stolarnia/wozki.html', context_dict)
+    except ValueError as e:
+        return render(request, 'terminal/stolarnia/wozki.html', {'alert': "NIE POPRAWNA DATA!"})
+    context_dict = {'Pola': Pole.objects.order_by('pole')}
+    return render(request, 'terminal/stolarnia/wozki.html', context_dict)
+
+@csrf_exempt
+def stolarnia_wozek_pojedynczy(request, wozek):
+    return render(request, 'terminal/stolarnia/wozki_pojedyncze.html', {})
+
+def usun_pole(request, pole):
+    pola = Pole.objects.filter(pole=pole)
+    if pola.count() > 0:
+        pola.delete()
+    return render(request, 'terminal/test.html', {})
 
 # ---------------------------------------------------------------------------
 # BUFOR
@@ -209,7 +234,7 @@ def bufor_przekaz(request):
         if s.tapicernia_ilosc == 0:
             s.tapicernia = True
             T.zakonczone = True
-            T.save
+            T.save()
             T.pole_set.all().delete()
         s.save()
         message_string = 'Wydano TA %s' % (T.nr)
@@ -226,7 +251,7 @@ def bufor_oddaj(request):
     status_wozka = Wozek.objects.filter(wozek=wozek, odebrany=True)
     if len(status_wozka) == 0:
         return render(request, 'terminal/bufor/oddaj.html', {'error': True,
-        'message': 'Blad krytyczny! Wezwij administratora sieci!'})
+        'message': 'Wózek nie został odebrany, lub został już oddany!'})
     for each in status_wozka:
         each.delete()
     message_string = "Wozek %i oddany na szwalnie" % wozek
@@ -243,7 +268,7 @@ def bufor_potwierdz(request):
     status_wozka = Wozek.objects.filter(wozek=wozek, odebrany=False)
     if len(status_wozka) == 0:
         return render(request, 'terminal/bufor/potwierdz.html', {'error': True,
-            'message': 'Podany wozek nie ma kompletow!'})
+            'message': 'Podany wozek nie ma kompletow, lub nie zostały one zeskanowane'})
     for each in status_wozka:
         s = each.ta.status_set.first()
         each.odebrany = True
@@ -332,3 +357,11 @@ def zestawienie(request):
 def zestawienie_pojedyncze(request, T):
     ta = TA.objects.get(nr = int(T))    
     return render(request, 'terminal/pojedyczne.html', {"TA": ta})
+
+# ---------------------------------------------------------------------------
+#TESTOWE
+def test(request):    
+    return render(request, 'terminal/base.html', {'Pola': Pole.objects.order_by('pole')})
+
+def test2(request):    
+    return render(request, 'terminal/test.html', {'Pola': Pole.objects.order_by('pole')})

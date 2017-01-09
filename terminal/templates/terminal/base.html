@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }}</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+
+  <!-- My CSS -->
+  <link rel="stylesheet" type="text/css" href="{% static 'terminal/css/style.css' %}">
+ 
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <!-- <script type="text/javascript" src="http://livejs.com/live.js"></script>
+-->
+<link rel="stylesheet" href="{% static 'jquery/css/jquery-ui.css' %}">
+</head>
+<body>
+<div class="container">
+  <div id="logo" class="text-center">
+    <img src="{% static 'terminal/img/logo.png' %}" alt="">
+  </div>  
+  <div id="main_body">
+    <div class="error">{% block alert %}
+    {{alert}} 
+    {% endblock alert %}</div>
+    <div class="header">
+    {% block header %}
+    <form action="{% url 'zestawienie' %}" method="GET">
+    Data:
+    <input type="text" id="datepicker" name="nowa_data" value="{{wybrana_data}}">  
+    <input type="submit" name="ok" value="Wyszukaj"></form>
+    {% endblock header %} 
+    </div>    
+    <div class="wybrana_data text-center">{{wybrana_data}}</div>
+    {% block content %}
+      Hello
+    {% endblock content %}    
+  </div>
+</div>
+</body>
+
+  <!-- jQuery -->
+  <script src="{% static 'jquery/js/jquery.min.js' %}"></script>
+  <!-- Bootstrap JavaScript -->
+  <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="{% static 'jquery/js/jquery-ui.js' %}"></script>
+
+  <script type="text/javascript">
+          $(document).ready(function() {
+
+            $.datepicker.regional.pl = {
+            closeText: "Zamknij",
+            prevText: "&#x3C;Poprzedni",
+            nextText: "Następny&#x3E;",
+            currentText: "Dziś",
+            monthNames: [ "Styczeń","Luty","Marzec","Kwiecień","Maj","Czerwiec",
+            "Lipiec","Sierpień","Wrzesień","Październik","Listopad","Grudzień" ],
+            monthNamesShort: [ "Sty","Lu","Mar","Kw","Maj","Cze",
+            "Lip","Sie","Wrz","Pa","Lis","Gru" ],
+            dayNames: [ "Niedziela","Poniedziałek","Wtorek","Środa","Czwartek","Piątek","Sobota" ],
+            dayNamesShort: [ "Nie","Pn","Wt","Śr","Czw","Pt","So" ],
+            dayNamesMin: [ "N","Pn","Wt","Śr","Cz","Pt","So" ],
+            weekHeader: "Tydz",
+            dateFormat: "dd.mm.yy",
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: "" };
+            $('#datepicker').datepicker($.datepicker.regional[ "pl" ]);
+          });
+        </script>
+</body>
+</html>

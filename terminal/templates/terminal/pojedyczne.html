@@ -74,7 +74,7 @@
     <div class="error">{{alert}}</div>
     <p>{{ TA.nr }}</p>    
     {% for etykieta in TA.etykieta_set.all %}
-      <h7>{{ etykieta.element }}</h7><br>
+      <h7>{{ etykieta.nr }} - {{ etykieta.element }}</h7><br>
     {% endfor %}
   </div>
 </body>

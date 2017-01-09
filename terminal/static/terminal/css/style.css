@@ -1,46 +1,46 @@
 body {
-    width: 240px;
-    height: 320px;
+    background-color: #E4DFDA;
 }
-
+h3 {
+    color: #C1666B;
+    font-weight: bolder;
+}
 input {
-    margin-bottom: 10px;
+    width: 150px;
+    height: 45px;
+}
+h5 {
+    padding-left: 45px;
+    font-size: 20px;
+    color: #4357AD;
+    font-weight: bold;
+    float: left;
+}
+div.ui-datepicker{
+     font-size:24px;
+}
+h6 {
+    padding-left: 65px;
+    color: #4357AD;
+}
+#myProgress {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  background-color: #ddd;
 }
 
-.container {
-    background-color: #888888;
-    width: inherit;
-    height: inherit;
+#myBar {
+  position: absolute;
+  height: 100%;
+  background-color: #4CAF50;
 }
-
-.btn {
-    margin: 10px;
-    width: 120px;
-    height: 30px;
+.error {
+    color: red;
+    font-size: 25px;
+    font-weight: bolder;
 }
-
-.btn-sm {
-    width: 100%;
-}
-
-#button_space {
-    padding-top: 25px;
-    margin: auto;
-    width: 180px;
-}
-
-.errorinfo {
-    padding-top: 10px;
-    width: 100%;
-}
-
-.message_box {
-    padding-top: 10px;
-    padding-bottom: 20px;
-    width: 100%;
-}
-
-.mini_info {
-    font-size: smaller;
-    margin: 0 0 2px;
+.wybrana_data {
+    font-weight: bolder;
+    font-size: 25px;
 }

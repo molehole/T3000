@@ -17,6 +17,29 @@ class Tura(models.Model):
     def ilosci_skonczone_stolarnia(self):
         return self.ta_set.filter(Q(status__stolarnia=True) | Q(status__stolarnia_modelarnia = True)).count()
 
+    def zakonczona(self):
+        for t in self.ta_set.all():
+            if t.zakonczone == False:
+                return False
+            else:
+                return True            
+
+    def zakonczone_po_statusach(self):
+        flag = True
+        for t in self.ta_set.all():
+            t_status = t.status_set.get()
+            if not (t_status.stolarnia and t_status.szwalnia and t_status.tapicernia):
+                flag = False
+        return flag
+
+    def zakonczone_na_szwalni(self):
+        flag = True
+        for t in self.ta_set.all():
+            t_status = t.status_set.get()
+            if not (t_status.szwalnia):
+                flag = False
+        return flag
+
     def __str__(self):
         return_string = str(self.nr) + "(" + str(self.data) + ")"
         return str(return_string)
@@ -83,19 +106,14 @@ class TA(models.Model):
     def kolor_na_buforze(self):
         if self.TA_do_wydania() > 0:
             return str('#12c177')
-        if self.pokaz_odebrane_wozki().count() >= 1 or self.pole_set.all().count() >= 1 :
-            return str('#EEE842')
-        if self.pokaz_odebrane_wozki().count() >=1 and self.status_set.get().tapicernia_ilosc == 0:
-            return str('#fb3e3e')
+        elif self.pokaz_odebrane_wozki().count() >= 1 or self.pole_set.all().count() >= 1:
+           return str('#EEE842')
 
     def TA_do_wydania(self):
-        if self.status_set.first().tapicernia_ilosc == 0:
-            return 0
+        if self.pokaz_odebrane_wozki().count() > 0 and self.pole_set.all().count() > 0:
+            return gcd(self.pokaz_odebrane_wozki().count(), self.pole_set.all().count())
         else:
-            if self.pokaz_odebrane_wozki().count() == 0 or self.pole_set.all().count() == 0:
-                return 0
-            else:
-                return gcd(self.pokaz_odebrane_wozki().count(), self.pole_set.all().count())
+            return 0
 
     def __str__(self):
         return str(self.nr)
@@ -123,6 +141,12 @@ class Wozek(models.Model):
     ta = models.ForeignKey(TA)
     odebrany = models.BooleanField(default=False)
 
+    def wozek_rozladowany(self):
+        for each in Wozek.objects.filter(wozek=self.wozek):
+            if each.ta.status_set.get().tapicernia_ilosc >= 1:
+                return False
+        return True
+
     def __str__(self):
         return str(self.wozek)
 
@@ -134,6 +158,9 @@ class Pole(models.Model):
     data_wydania = models.DateTimeField(null=True)
     ta = models.ForeignKey(TA)
     ilosc = models.IntegerField(default=0)
+
+    def ilosc_na_polu(self):        
+        return Pole.objects.filter(pole=self.pole).count()
 
     def __str__(self):
         return str(self.pole)
