@@ -10,9 +10,6 @@
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
-
-        <!-- My CSS -->
-        <link rel="stylesheet" type="text/css" href="{% static 'terminal/css/informacje.css' %}">
         <!-- <link rel="stylesheet" type="text/css" href="{% static 'szwalnia/style.css' %}"> -->
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -21,7 +18,8 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
         <!-- <script type="text/javascript" src="http://livejs.com/live.js"></script> -->
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+        <link rel="stylesheet" href="{% static 'jquery-ui/jquery-ui.css' %}">
         <style type="text/css" media="screen">
             body {
                 background-color: #E4DFDA;
@@ -115,7 +113,7 @@
         <!-- Bootstrap JavaScript -->
         <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="{% static 'jquery-ui/jquery-ui.js' %}"></script>
 
         <script type="text/javascript">
           $(document).ready(function() {
