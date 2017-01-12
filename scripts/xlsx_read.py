@@ -29,15 +29,14 @@ def zapiszKolejnoscDoBazy(import_file=tury_path):
         for row in csvdata:
             if row:
                 if not row == header:
-                    if not row[10] == '0.0':
+                    if not row[11] == '0.0':
                         try:
                             seconds = (float(row[2]) - 25569) * 86400.0
                             date = datetime.datetime.utcfromtimestamp(seconds)
-                            if len(row[1]) > 3:
+                            if len(row[1]) > 3:                                
                                 Kolejnosc.objects.get_or_create(tura=row[1], data=date)
                         except ValueError as e:
                             break
-
 
 try:
     csv_from_excel(os.path.join(working_dir, file_name))

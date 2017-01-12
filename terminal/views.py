@@ -69,6 +69,8 @@ def szwalnia_status(request):
     for each in kolejnosc:
         tury = Tura.objects.filter(nr = each.tura, data = each.data).first()
         ilosci_pozostale = tury.ta_set.filter(status__szwalnia=True).count()
+        if ilosci_pozostale.count() == 0:
+            ilosci_pozostale = 0
         try:
             procent = int((ilosci_pozostale/tury.ta_set.all().count())*100)
         except ZeroDivisionError as e:
@@ -224,12 +226,10 @@ def bufor_przekaz(request):
     T = Etyk.ta
     s = Status.objects.get(ta = T)
     if s.tapicernia == True:
-        return render(request, 'terminal/bufor/przekaz.html', {'error': True,
-                                                        'message': 'Zlecenie zostalo juz zakończone'})
+        return render(request, 'terminal/bufor/przekaz.html', {'error': True, 'message': 'Zlecenie zostalo juz zakończone'})
     else:
-        if T.TA_do_wydania == 0:
-            return render(request, 'terminal/bufor/przekaz.html', {'error': True,
-                                                        'message': 'Wyglada na to ze nie ma kompletu dla tego zlecenia!'})
+        # if T.TA_do_wydania == 0:
+            # return render(request, 'terminal/bufor/przekaz.html', {'error': True, 'message': 'Wyglada na to ze nie ma kompletu dla tego zlecenia!'})
         s.tapicernia_ilosc -= 1
         if s.tapicernia_ilosc == 0:
             s.tapicernia = True
