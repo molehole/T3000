@@ -3,16 +3,10 @@ import time
 import re
 from stat import S_ISREG, ST_CTIME, ST_MODE
 import os
-from datetime import datetime
-from terminal.models import Etykieta, Status, Tura, TA
-from django.db.models import Count
 
-# Timer
-start_time = time.time()
 
 # Glowna sciezka
 main_path = os.path.join('/', 'media', 'Etykiety_TXT')
-# main_path = '//jan-svr-nas01/domowy/Labeo/Planowanie/TXT/'
 
 # Zmienne
 elementy_regex = '(?<=\^FN921\^FD)(.*)(?=\^FS)'
@@ -112,7 +106,7 @@ def wyszukajPlikiPoDacie(sciezka):
     return entries
 
 
-def dodaDoBazyDanych(etykieta):
+def UtworzEtykiete(etykieta):
     tura_index, created_tura = Tura.objects.get_or_create(nr = etykieta.tura, data = etykieta.data)
     ta_index, created_ta = TA.objects.get_or_create(tura = tura_index, nr = etykieta.ta)
     etykieta, created_e = Etykieta.objects.get_or_create(ta = ta_index, element = etykieta.element, pozycja = etykieta.pozycja, nr = etykieta.nr)
@@ -140,19 +134,15 @@ def UzupelnijStatus(TA_pelne):
         TA_pelne.ilosc = ilosc
         TA_pelne.save()
 
+def PrzeszukiwaniePlikow(lista_plikow = wyszukajPlikiPoDacie(main_path))
+    for T, filenames in sorted(lista_plikow):
+        czytajPlikEtykiet(filenames)
 
-for T, filenames in sorted(wyszukajPlikiPoDacie(main_path)):
-    czytajPlikEtykiet(filenames)
+def DodajDoBazy():
+    PrzeszukiwaniePlikow()
+    for each in tablica_etykiet:
+        UtworzEtykiete(each)
 
-for each in tablica_etykiet:
-    dodaDoBazyDanych(each)
-
-print('ZAKONCZONO DODAWANIE ETYKIET...')
-print("--- %s seconds ---" % (time.time() - start_time))
-statusy_time = time.time()
-print('GENEROWANIE STATUSOW....')
-
-for each in TA.objects.all():
-    UzupelnijStatus(each)
-print("--- %s seconds ---" % (statusy_time.time() - start_time))
-print("--- %s seconds ---" % (time.time() - start_time))
+def DodawanieStatusow():
+    for each in TA.objects.all():
+        UzupelnijStatus(each)

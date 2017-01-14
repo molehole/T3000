@@ -1,7 +1,11 @@
 from django.shortcuts import render
-from terminal.models import Etykieta, Wozek, Pole, Status, Tura, Kolejnosc, TA
+from apps.terminal.models import Etykieta, Wozek, Pole, Status, Tura, Kolejnosc, TA
 from datetime import datetime
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Count
+
+#Importowane skrypty
+from apps.terminal.scripts import data_import, xlsx_read
 
 
 # Create your views here.
@@ -357,6 +361,14 @@ def zestawienie(request):
 def zestawienie_pojedyncze(request, T):
     ta = TA.objects.get(nr = int(T))    
     return render(request, 'terminal/pojedyczne.html', {"TA": ta})
+
+# ---------------------------------------------------------------------------
+#SKRYPTY
+
+def import_danych(request)
+    data_import.DodajDoBazy()
+    # data_import.DodawanieStatusow()
+    # return render(request, 'data_import.html', {})
 
 # ---------------------------------------------------------------------------
 #TESTOWE

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from terminal.models import Etykieta, Wozek, Pole, Status, TA, Tura, Kolejnosc
+from apps.terminal.models import Etykieta, Wozek, Pole, Status, TA, Tura, Kolejnosc
 
 # Register your models here.
 admin.site.register(Etykieta)
