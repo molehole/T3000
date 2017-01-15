@@ -15,9 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from terminal import views
+from apps.terminal import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^terminal/', include('terminal.urls'))
+    url(r'^terminal/', include('apps.terminal.urls'))
 ]

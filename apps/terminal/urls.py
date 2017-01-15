@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
-from terminal import views
+from apps.terminal import views
 
 urlpatterns = [
     url(r'^szwalnia/status/$', views.szwalnia_status, name='szwalnia_status'),
@@ -32,6 +32,8 @@ urlpatterns = [
     url(r'^bufor/sprawdz/$', views.bufor_sprawdz, name='bufor_sprawdz'),
     url(r'^zestawienie/$', views.zestawienie, name='zestawienie'),
     url(r'^zestawienie/(?P<T>[\d]+)/$', views.zestawienie_pojedyncze, name='zestawienie_pojedyncze'),
+    url(r'^import_danych/1$', views.import_danych, name='import_danych'),
+    url(r'^import_kolejnosci/1$', views.import_kolejnosci, name='import_kolejnosci'),
     url(r'^test/$', views.test, name='test'),
     url(r'^test2/$', views.test2, name='test2'),
 ]

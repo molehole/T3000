@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'zp&3su%6im8+)c!20yub437=o*pa=+fz1t%uq)+a1j3rq^yy7+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'terminal',
+    'apps.terminal',
 ]
 
 MIDDLEWARE = [
@@ -76,8 +76,11 @@ WSGI_APPLICATION = 'T3000.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'django_db',
+        'USER': 'dj',
+        'PASSWORD': 'TDq1ubITBp5c',
+        'HOST': 'localhost',
     }
 }
 

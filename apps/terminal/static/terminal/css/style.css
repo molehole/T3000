@@ -1,0 +1,46 @@
+body {
+    background-color: #E4DFDA;
+}
+h3 {
+    color: #C1666B;
+    font-weight: bolder;
+}
+input {
+    width: 150px;
+    height: 45px;
+}
+h5 {
+    padding-left: 45px;
+    font-size: 20px;
+    color: #4357AD;
+    font-weight: bold;
+    float: left;
+}
+div.ui-datepicker{
+     font-size:24px;
+}
+h6 {
+    padding-left: 65px;
+    color: #4357AD;
+}
+#myProgress {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  background-color: #ddd;
+}
+
+#myBar {
+  position: absolute;
+  height: 100%;
+  background-color: #4CAF50;
+}
+.error {
+    color: red;
+    font-size: 25px;
+    font-weight: bolder;
+}
+.wybrana_data {
+    font-weight: bolder;
+    font-size: 25px;
+}

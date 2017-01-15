@@ -1,8 +1,10 @@
 from django.shortcuts import render
-from terminal.models import Etykieta, Wozek, Pole, Status, Tura, Kolejnosc, TA
+from apps.terminal.models import Etykieta, Wozek, Pole, Status, Tura, Kolejnosc, TA
 from datetime import datetime
 from django.views.decorators.csrf import csrf_exempt
 
+#scripts
+from apps.terminal.scripts import data_import, xlsx_read
 
 # Create your views here.
 @csrf_exempt
@@ -69,7 +71,7 @@ def szwalnia_status(request):
     for each in kolejnosc:
         tury = Tura.objects.filter(nr = each.tura, data = each.data).first()
         ilosci_pozostale = tury.ta_set.filter(status__szwalnia=True).count()
-        if ilosci_pozostale.count() == 0:
+        if ilosci_pozostale == 0:
             ilosci_pozostale = 0
         try:
             procent = int((ilosci_pozostale/tury.ta_set.all().count())*100)
@@ -357,6 +359,23 @@ def zestawienie(request):
 def zestawienie_pojedyncze(request, T):
     ta = TA.objects.get(nr = int(T))    
     return render(request, 'terminal/pojedyczne.html', {"TA": ta})
+
+# ---------------------------------------------------------------------------
+#SKRYPTY
+def import_danych(request):    
+    try:
+        data_import.DodajDoBazy()
+        data_import.DodawanieStatusow()
+    except Exception as e:
+        raise e    
+    # return render(request, 'data_import.html', {})
+
+def import_kolejnosci(request):    
+    try:
+        xlsx_read.DodajKolejnosc()
+    except Exception as e:
+        raise e    
+    # return render(request, 'data_import.html', {})
 
 # ---------------------------------------------------------------------------
 #TESTOWE
