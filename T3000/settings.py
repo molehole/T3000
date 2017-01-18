@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_forms_bootstrap',
     'apps.terminal',
+    'apps.lista_rekrutacyjna',
 ]
 
 MIDDLEWARE = [

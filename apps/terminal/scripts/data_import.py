@@ -33,6 +33,14 @@ class Etykieta_txt():
     element = ''
     ilosc = ''
 
+    def informacje(self):
+        return print("""Tura: {0}
+Data: {1}
+TA: {2}
+Etykieta: {3}
+Element: {4}""").format(self.tura, self.data, self.ta. self.nr, self.element)
+
+
     def setValues(self, nr, ta, tura, pozycja, data, elementy, element, ilosc):
         self.ta = ta
         self.nr = nr
@@ -140,6 +148,10 @@ def UzupelnijStatus(TA_pelne):
 def PrzeszukiwaniePlikow(lista_plikow = wyszukajPlikiPoDacie(main_path)):
     for T, filenames in sorted(lista_plikow):
         czytajPlikEtykiet(filenames)
+
+def PokazZnalezione():
+    for each in tablica_etykiet:
+        each.informacje()
 
 def DodajDoBazy():
     PrzeszukiwaniePlikow()

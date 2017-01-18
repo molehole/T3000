@@ -1,0 +1,49 @@
+{% extends "lista_rekrutacyjna/base.html" %}
+
+{% block naglowek %}
+<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+	<h1 class="test bigger">Lista rekrutacyjna</h1>	
+</div>
+{% if auth %}
+<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+	<a href="{% url 'formularz' %}"><button id="dodaj_osobe" type="button" class="btn btn-primary add bigger my_button">Dodaj</button></a>
+</div>
+<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+<a href="{% url 'logout' %}"><button type="button" class="btn btn-danger my_button add bigger">Wyloguj</button></a>
+</div>
+{% else %}
+	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+	</div>
+	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+	<a href="{% url 'login' %}"><button id="zaloguj" type="button" class="btn btn-warning login bigger my_button" >Zaloguj</button></a>
+</div>
+{% endif %}
+{% endblock naglowek %}
+
+{% block error %}
+	{{ error }}
+{% endblock error %}
+
+{% block tabela %}
+	<table class="table table-hover">
+		<thead>
+			<tr class="text-center">
+				<th>Imię i Nazwisko</th>
+				<th>Data</th>
+				<th>Godzina</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for row in dane %}			
+		<tr {% if row.przedawnione %}class="przedawnione"{% endif %}>
+			<td>{{ row.imie }} {{ row.nazwisko }}</td>
+			<td>{{ row.data_rozmowy}}</td>
+			<td class="text-center">{{ row.godzina_rozmowy }}</td>
+			<!-- <td><a href=""><img src="http://icons.iconarchive.com/icons/iconshock/vista-general/24/trash-icon.png" alt=""></a></td> -->
+			{% if auth %}<td><a style="color: red;" href="usun/{{ row.pk }}/"><span class="glyphicon glyphicon-remove"></span></a></td>{% endif %}
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	{% if auth %}{% endif %}
+{% endblock tabela %}	

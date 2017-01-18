@@ -93,7 +93,7 @@
                 <div id="myBar" style="width: {{ tura.procent }}%;"></div>
               </div>
             </div>
-            <div class="ta" style="height: 200px;">
+            <div class="ta" style="height: 240px;">
               {% for ta in tura.tura.pokaz_niezakonczone %}
               {% if not ta.pokaz_szwalnie %}
                   {% if ta.ilosc > 1 %}<h5>{{ ta.nr }} - {{ ta.status_set.first.szwalnia_ilosc }}szt.*</h5>{% endif %}

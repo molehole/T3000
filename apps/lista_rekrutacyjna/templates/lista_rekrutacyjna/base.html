@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>{% block title %}Lista Rekrutacyjna JANIPOL MEBLE{% endblock title %}</title>
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">	
+	<link rel="stylesheet" href="{% static 'jquery-ui/jquery-ui.css' %}">
+	<link rel="stylesheet" href="{% static 'lista_rekrutacyjna/lista.css' %}">
+	
+	{% block Css %}
+	{% endblock Css %}
+</head>
+<body>
+	<div class="container">		
+		<div class="row">
+			{% block naglowek %}{% endblock naglowek %}
+		</div>
+		{% block error %}
+			<div class="errorblock">{{ error }}</div>
+		{% endblock error %}
+		<div class="row">
+			{% block formularz %}
+			{% endblock formularz %}
+		</div>
+		<div class="row">
+			{% block tabela %}
+			{% endblock tabela %}
+		</div>
+		<div class="row">	
+			{% block stopka %}{% endblock stopka %}
+		</div>
+	</div>	
+
+	<!-- jQuery -->
+	<script src="{% static 'jquery/js/jquery.min.js' %}"></script>
+	<!-- Bootstrap JavaScript -->
+	<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+	<script src="{% static 'jquery-ui/jquery-ui.js' %}"></script>
+
+	<script type="text/javascript">
+	  $(document).ready(function() {
+	    $('.ta').show();
+
+	    $.datepicker.regional.pl = {
+	    closeText: "Zamknij",
+	    prevText: "&#x3C;Poprzedni",
+	    nextText: "Następny&#x3E;",
+	    currentText: "Dziś",
+	    monthNames: [ "Styczeń","Luty","Marzec","Kwiecień","Maj","Czerwiec",
+	    "Lipiec","Sierpień","Wrzesień","Październik","Listopad","Grudzień" ],
+	    monthNamesShort: [ "Sty","Lu","Mar","Kw","Maj","Cze",
+	    "Lip","Sie","Wrz","Pa","Lis","Gru" ],
+	    dayNames: [ "Niedziela","Poniedziałek","Wtorek","Środa","Czwartek","Piątek","Sobota" ],
+	    dayNamesShort: [ "Nie","Pn","Wt","Śr","Czw","Pt","So" ],
+	    dayNamesMin: [ "N","Pn","Wt","Śr","Cz","Pt","So" ],
+	    weekHeader: "Tydz",
+	    dateFormat: "dd.mm.yy",
+	    firstDay: 1,
+	    isRTL: false,
+	    showMonthAfterYear: false,
+	    yearSuffix: "" };
+	    $('#datepicker').datepicker($.datepicker.regional[ "pl" ]);
+
+	  });
+	</script>
+</body>
+</html>

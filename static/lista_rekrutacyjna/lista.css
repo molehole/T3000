@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css?family=Cherry+Swash|Vampiro+One|Pontano+Sans|Yatra+One');
+
+.my_button {
+    width: 100%;
+    height: 70px;
+    margin-top: 5px;
+}
+
+body {
+	background: url("img/background.png");
+}
+
+.center-text {
+	text-align: center;
+}
+
+.test {
+	font-family: 'Yatra One';
+}
+
+.login {
+	font-family: 'Vampiro One', cursive;
+	background: #368250;
+	border-color: #368250;
+}
+
+.login:hover {
+	font-family: 'Vampiro One', cursive;
+	background: #295839;
+	border-color: #295839;
+}
+
+
+.add {
+	font-family: 'Vampiro One', cursive;
+}
+
+.przedawnione {
+	color: #CC5757;
+}
+
+.nice {
+	font-style: 32px;
+	font-family: 'Cherry Swash', cursive;
+	font-weight: bolder;
+	color: #888888;
+}
+
+.bigger {
+	font-size: 40px;
+}
+
+th {
+	font-family: 'Pontano Sans';
+	font-size: 24px;
+}
+
+td {
+	font-family: 'Pontano Sans';
+	font-weight: bolder;
+}
+
+.errorblock {
+	text-align: center;
+	color: red;
+	font-weight: bolder;
+	font-family: 'Pontano Sans';		
+	font-size: 24px;
+}

@@ -19,5 +19,6 @@ from apps.terminal import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^terminal/', include('apps.terminal.urls'))
+    url(r'^terminal/', include('apps.terminal.urls')),
+    url(r'^lista_r/', include('apps.lista_rekrutacyjna.urls')),
 ]

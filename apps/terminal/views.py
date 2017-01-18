@@ -70,14 +70,16 @@ def szwalnia_status(request):
     ordered_list = ()
     for each in kolejnosc:
         tury = Tura.objects.filter(nr = each.tura, data = each.data).first()
-        ilosci_pozostale = tury.ta_set.filter(status__szwalnia=True).count()
-        if ilosci_pozostale == 0:
-            ilosci_pozostale = 0
         try:
+            ilosci_pozostale = tury.ta_set.filter(status__szwalnia=True).count()
+            if ilosci_pozostale == 0:
+                ilosci_pozostale = 0
             procent = int((ilosci_pozostale/tury.ta_set.all().count())*100)
-        except ZeroDivisionError as e:
+            lista_kolejnosci.append({'tura': tury, 'ilosci_pozostale': ilosci_pozostale, 'procent': procent})
+        except AttributeError:
+            continue
+        except ZeroDivisionError:
             procent = 0
-        lista_kolejnosci.append({'tura': tury, 'ilosci_pozostale': ilosci_pozostale, 'procent': procent})
     context_dict = {
         'tury': lista_kolejnosci,
         'wybrana_data':  nowa_data.strftime('%d.%m.%Y'),
@@ -364,8 +366,9 @@ def zestawienie_pojedyncze(request, T):
 #SKRYPTY
 def import_danych(request):    
     try:
-        data_import.DodajDoBazy()
-        data_import.DodawanieStatusow()
+        data_import.PokazZnalezione()
+        # data_import.DodajDoBazy()
+        # data_import.DodawanieStatusow()
     except Exception as e:
         raise e    
     # return render(request, 'data_import.html', {})
