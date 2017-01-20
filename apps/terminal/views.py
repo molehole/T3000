@@ -366,9 +366,9 @@ def zestawienie_pojedyncze(request, T):
 #SKRYPTY
 def import_danych(request):    
     try:
-        data_import.PokazZnalezione()
-        # data_import.DodajDoBazy()
-        # data_import.DodawanieStatusow()
+        # data_import.PokazZnalezione()
+        data_import.DodajDoBazy()
+        data_import.DodawanieStatusow()
     except Exception as e:
         raise e    
     # return render(request, 'data_import.html', {})

@@ -30,7 +30,8 @@ def dodaj(request):
             nazwisko = data['nazwisko']
             data_spotkania = data['data']
             godzina_spotkania = data['godzina']
-            a = Spotkania(imie=imie, nazwisko=nazwisko, data_rozmowy=data_spotkania, godzina_rozmowy=godzina_spotkania)
+            dodatkowe_informacje = data['dodatkowe_informacje']
+            a = Spotkania(imie=imie, nazwisko=nazwisko, data_rozmowy=data_spotkania, godzina_rozmowy=godzina_spotkania, info = dodatkowe_informacje)
             a.save()            
             return HttpResponseRedirect('/lista_r/')
         else:

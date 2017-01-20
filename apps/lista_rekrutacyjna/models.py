@@ -9,6 +9,7 @@ class Spotkania(models.Model):
     nazwisko = models.TextField(default=None)
     data_rozmowy = models.DateField(default=None)
     godzina_rozmowy = models.TimeField(default=None)
+    info = models.TextField(default='')
 
     @property
     def przedawnione(self):
