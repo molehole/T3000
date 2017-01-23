@@ -1,2 +1,49 @@
-{% extends base.html %}
+{% extends 'terminal/base.html' %}
 
+{% block header %}
+	<form action="{% url 'status' %}" method="GET">
+    Data:
+    <input type="text" id="datepicker" name="nowa_data" value="{{wybrana_data}}">  
+    <input type="submit" name="ok" value="Wyszukaj">
+    </form>
+{% endblock header %}
+
+{% block content %}
+{% for e in dane %}	
+	{% ifchanged e.tura %}
+		<h2>{{ e.tura }}</h2>
+	{% endifchanged %}
+	<p>TA - {{ e.ta }}</p>
+	<ul>
+		<li>Szwalnia -
+		{% if e.szwalnia %}
+			<span class="glyphicon glyphicon-ok-circle" style="color: green;"></span>
+		{% else %}
+			<span class="glyphicon glyphicon-exclamation-sign" style="color: red;"></span>
+		{% endif %}
+		</li>
+		<li>Stolarnia -
+		{% if e.stolarnia %}
+			<span class="glyphicon glyphicon-ok-circle" style="color: green;"></span>
+		{% else %}
+			<span class="glyphicon glyphicon-exclamation-sign" style="color: red;"></span>
+		{% endif %}
+		</li>
+		<li>Tapicernia -
+		{% if e.tapicernia %}
+			<span class="glyphicon glyphicon-ok-circle" style="color: green;"></span>
+		{% else %}
+			<span class="glyphicon glyphicon-exclamation-sign" style="color: red;"></span>
+		{% endif %}
+		</li>
+		<li>Pianka -
+		{% if e.pianka %}
+			<span class="glyphicon glyphicon-ok-circle" style="color: green;"></span>
+		{% else %}
+			<span class="glyphicon glyphicon-exclamation-sign" style="color: red;"></span>
+		{% endif %}
+		</li>
+	</ul>
+	
+{% endfor %}
+{% endblock content %}

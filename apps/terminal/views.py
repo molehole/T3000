@@ -2,6 +2,7 @@ from django.shortcuts import render
 from apps.terminal.models import Etykieta, Wozek, Pole, Status, Tura, Kolejnosc, TA
 from datetime import datetime
 from django.views.decorators.csrf import csrf_exempt
+import MySQLdb
 
 #scripts
 from apps.terminal.scripts import data_import, xlsx_read
@@ -362,6 +363,42 @@ def zestawienie_pojedyncze(request, T):
     ta = TA.objects.get(nr = int(T))    
     return render(request, 'terminal/pojedyczne.html', {"TA": ta})
 
+@csrf_exempt
+def status_ogolny(request):
+    if not request.GET:
+        return render(request, 'terminal/status.html', {})
+    try:
+        nowa_data = datetime.strptime(request.GET['nowa_data'],'%d.%m.%Y')
+    except ValueError as e:
+        return render(request, 'terminal/status.html', {'alert': "NIE POPRAWNA DATA!"})
+    kolejnosc = Kolejnosc.objects.filter(data = nowa_data.strftime('%Y-%m-%d'))
+    lista_kolejnosci = []
+
+    conn = MySQLdb.connect('jan-svr-intra', 'itadmin', 'J@nipo1')
+    dict_cursor = MySQLdb.cursors.DictCursor(conn)
+
+    for each in kolejnosc:        
+        tura = Tura.objects.filter(nr = each.tura, data = each.data).get()
+        ta = tura.ta_set.all()  
+        for status in ta:
+            query = "SELECT * from tasma.zamowienia WHERE TA_nr = {0}".format(status.nr)
+            dict_cursor.execute(query)
+            row = dict_cursor.fetchone()
+            if row is None:
+                pianka = False
+            else:
+                pianka = True 
+            lista_kolejnosci.append({'tura': tura, 'ta': status.nr,
+                'szwalnia': status.status_set.get().szwalnia,
+                'stolarnia': status.status_set.get().stolarnia,
+                'tapicernia': status.status_set.get().tapicernia,
+                'pianka':  pianka})
+    context_dict = {
+        'dane': lista_kolejnosci,
+        'wybrana_data':  nowa_data.strftime('%d.%m.%Y'),
+    }
+    conn.close()
+    return render(request, 'terminal/status.html', context_dict)
 # ---------------------------------------------------------------------------
 #SKRYPTY
 def import_danych(request):    

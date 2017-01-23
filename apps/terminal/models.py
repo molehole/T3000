@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from fractions import gcd
 from django.db.models import Q
+import MySQLdb
 
 
 class Tura(models.Model):
@@ -61,7 +62,7 @@ class TA(models.Model):
         row = dict_cursor.fetchone()
         if row in None:
             return False
-        else
+        else:
             return True
 
 # ============================================================

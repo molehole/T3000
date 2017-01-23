@@ -34,15 +34,12 @@
     {% endblock alert %}</div>
     <div class="header">
     {% block header %}
-    <form action="{% url 'zestawienie' %}" method="GET">
-    Data:
-    <input type="text" id="datepicker" name="nowa_data" value="{{wybrana_data}}">  
-    <input type="submit" name="ok" value="Wyszukaj"></form>
+>
     {% endblock header %} 
     </div>    
     <div class="wybrana_data text-center">{{wybrana_data}}</div>
     {% block content %}
-      Hello
+      
     {% endblock content %}    
   </div>
 </div>
