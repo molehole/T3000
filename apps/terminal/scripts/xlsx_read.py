@@ -49,5 +49,5 @@ def DodajKolejnosc():
 
 def UtworzKopie():
     teraz = datetime.datetime.now()
-    backup_file_name = "-".join('export', teraz.strftime('%Y%m%d-%H%M%S%z')) + '.XLSX'
+    backup_file_name = "-".join(('export', teraz.strftime('%Y%m%d-%H%M%S%z'))) + '.XLSX'
     shutil.copy(os.path.join(working_dir, file_name), os.path.join(working_dir, 'backup', backup_file_name))

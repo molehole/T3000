@@ -52,6 +52,18 @@ class TA(models.Model):
     zakonczone = models.BooleanField(default=False)
     ilosc = models.IntegerField(default=1)
 
+    @property
+    def piankaStatus(self):
+        conn = MySQLdb.connect('jan-svr-intra', 'itadmin', 'J@nipo1')
+        dict_cursor = MySQLdb.cursors.DictCursor(conn)
+        query = "SELECT * from tasma.zamowienia WHERE TA_nr = {0}".format(self.nr)
+        dict_cursor.execute(query)
+        row = dict_cursor.fetchone()
+        if row in None:
+            return False
+        else
+            return True
+
 # ============================================================
 # SZWALNIA
     def szwalnia_przekaz_komplet(self):

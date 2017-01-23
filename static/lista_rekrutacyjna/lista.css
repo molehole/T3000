@@ -60,6 +60,7 @@ th {
 }
 
 td {
+	text-align: center;
 	font-family: 'Pontano Sans';
 	font-weight: bolder;
 }
